@@ -11,7 +11,7 @@ int main()
     while(1)
     {
         char *args[100];
-        printf("minibash$ pid=%d",getpid());
+        printf("minibash-$");
         fgets(input,max,stdin);
         input[strcspn(input,"\n")]='\0';
         int i=0;
@@ -24,6 +24,10 @@ int main()
         if(args[0]==NULL)
         {
             continue;
+        }
+        if(strcmp(args[0],"exit")==0)
+        {
+            break;
         }
         pid_t pid=fork();
         if(pid==0)
