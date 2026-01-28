@@ -2,6 +2,7 @@
 #include<unistd.h>
 #include<stdlib.h>
 #include<string.h>
+#include<sys/wait.h>
 #define max 1024
 
 int main()
@@ -20,11 +21,17 @@ int main()
             i++;
             args[i]=strtok(NULL," ");
         }
-        for(int j=0;j<i;j++)
+        pid_t pid=fork();
+        if(pid==0)
         {
-            printf("%s",args[j]);
+            execvp(args[0],args);
+            perror("Exec failed");         
+            exit(1);
         }
-        execvp(args[0],args);
+        else
+        {
+            wait(NULL);
+        }
     }
     return 0;
 }
