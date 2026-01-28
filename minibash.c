@@ -11,7 +11,7 @@ int main()
     while(1)
     {
         char *args[100];
-        printf("minibash$");
+        printf("minibash$ pid=%d",getpid());
         fgets(input,max,stdin);
         input[strcspn(input,"\n")]='\0';
         int i=0;
@@ -20,6 +20,10 @@ int main()
         {
             i++;
             args[i]=strtok(NULL," ");
+        }
+        if(args[0]==NULL)
+        {
+            continue;
         }
         pid_t pid=fork();
         if(pid==0)
