@@ -1,27 +1,30 @@
 #include<stdio.h>
+#include<unistd.h>
+#include<stdlib.h>
 #include<string.h>
 #define max 1024
 
 int main()
 {
-    char input[max];
+    char *input=malloc(max*sizeof(char));
     while(1)
     {
-        char *argv[100];
-        printf("minibash$:");
+        char *args[100];
+        printf("minibash$");
         fgets(input,max,stdin);
-        printf("you typed %s",input);
+        input[strcspn(input,"\n")]='\0';
         int i=0;
-        argv[i]=strtok(input," ");
-        while(argv[i]!=NULL)
+        args[i]=strtok(input," ");
+        while(args[i]!=NULL)
         {
             i++;
-            argv[i]=strtok(NULL," ");
-        }     
+            args[i]=strtok(NULL," ");
+        }
         for(int j=0;j<i;j++)
         {
-            printf("%s",argv[j]);
+            printf("%s",args[j]);
         }
+        execvp(args[0],args);
     }
     return 0;
 }
